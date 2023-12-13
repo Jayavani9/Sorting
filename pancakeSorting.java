@@ -28,6 +28,49 @@ Example 2:
 
 Input: arr = [1,2,3]
 Output: []
+
+  
+Solution:
+  
+class Solution {
+    //Tc: O(n^2) and Sc: O(1) 
+    public List<Integer> pancakeSort(int[] arr) {
+         List<Integer> result = new ArrayList<>();
+
+         int n = arr.length;
+        for (int i = n - 1; i > 0; i--) {
+            int maxIndex = findMaxIndex(arr, i);
+
+            flip(arr, maxIndex);
+            result.add(maxIndex + 1); 
+            flip(arr, i);
+            result.add(i + 1); 
+        }
+
+        return result;
+    }
+
+    private int findMaxIndex(int[] arr, int end) {
+        int maxIndex = 0;
+        for (int i = 1; i <= end; i++) {
+            if (arr[i] > arr[maxIndex]) {
+                maxIndex = i;
+            }
+        }
+        return maxIndex;
+    }
+
+    private void flip(int[] arr, int k) {
+        int start = 0;
+        while (start < k) {
+            int temp = arr[start];
+            arr[start] = arr[k];
+            arr[k] = temp;
+            start++;
+            k--;
+        }
+    }
+}
 Explanation: The input is already sorted, so there is no need to flip anything.
 Note that other answers, such as [3, 3], would also be accepted.
 
